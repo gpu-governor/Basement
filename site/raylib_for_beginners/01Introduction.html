@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/../../syntax_highlight/xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a href="#">Ncurses</a>
+            <a>SDL</a>
+            <a>ImGui</a>
+            <a>Pygame</a>
+            <a>Blog</a>
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h3>Introduction</h3>
+
+<p>This tutorial gather's heavily from other tutorials; most especially from the book "Programmers guide to ncurses" by Dan Gooking</p>
+
+<h3>installation</h3>
+
+<p>this tutorial is current with NCurses version 5.5.+. I assumes that you’re using a UNIX-like operating system (Linux,
+FreeBSD, Mac OS X, or some other OS based on UNIX), but you can windows as well via Cygwin.
+I also assume you can setup a project in your IDE of choice in order to get the code to run. Those kinds of instructions get out of date quickly so i wouldn't cover them in details.
+To install <code class="bound">ncurses</code>, follow these steps based on your operating system:</p>
+
+<h4><strong>On Linux:</strong></h4>
+
+<ol>
+<li><p><strong>Using a package manager:</strong></p>
+
+<ul>
+<li><strong>Debian/Ubuntu:</strong>
+<pre>
+<code class="language-shell">
+sudo apt-get update
+sudo apt-get install libncurses5-dev libncursesw5-dev
+</code>
+</pre>
+</li>
+<li><strong>Fedora:</strong>
+<pre>
+<code class="language-shell">
+sudo dnf install ncurses-devel
+</code>
+</pre>
+</li>
+<li><strong>Arch Linux:</strong>
+<pre>
+<code class="language-shell">
+sudo pacman -S ncurses
+</code>
+</pre>
+</li>
+</ul></li>
+<li><p><strong>From source:</strong>
+If you need the latest version or a custom build:</p>
+
+<ul>
+<li>Download the latest source code from the <a href="https://ftp.gnu.org/gnu/ncurses/">official GNU Ncurses page</a>.</li>
+<li>Extract the tarball:
+<code>bash
+tar -xvzf ncurses-&lt;version&gt;.tar.gz
+cd ncurses-&lt;version&gt;/
+</code></li>
+<li>Configure, compile, and install:
+<pre><code class="language-shell">
+./configure
+make
+sudo make install
+</code></pre></li>
+</ul></li>
+</ol>
+
+<h4><strong>On macOS:</strong></h4>
+
+<ol>
+<li><p><strong>Using Homebrew:</strong>
+<pre>
+<code class="language-shell">
+brew install ncurses
+</code>
+</pre>
+</p></li>
+<li><p><strong>From source:</strong></p>
+
+<ul>
+<li>Follow the same steps as for Linux using the source code from the GNU Ncurses page.</li>
+</ul></li>
+</ol>
+
+<h4><strong>On Windows:</strong></h4>
+
+<p><code>ncurses</code> isn't natively supported on Windows. However, you can use it with environments like Cygwin or WSL (Windows Subsystem for Linux).</p>
+
+<ul>
+<li><p><strong>Using Cygwin:</strong></p>
+
+<ul>
+<li>Install <code>ncurses</code> during the Cygwin setup process.</li>
+</ul></li>
+<li><p><strong>Using WSL:</strong></p>
+
+<ul>
+<li>Install it in your Linux distribution inside WSL as you would on a regular Linux system:
+<pre>
+<code class="language-shell">
+sudo apt-get install libncurses5-dev libncursesw5-dev
+</code>
+</pre>
+</li>
+</ul></li>
+</ul>
+
+<h4>Prerequisites</h4>
+
+<p>You should already:
+<ul>
+<li> Have basic C/C++ knowlegde (C mostly)</li>
+<li>know how to compile C/C++ programs, link libraries and in rare scenerios make use of Build Systems(optional)</li>
+</ul>
+</p>
+
+<h3>Curses or NCurses?</h3>
+
+<p>The Curses library of terminal control functions has been with UNIX since the early 1980s. As such, it was part of the older versions of UNIX, which required complex licenses and such to be used. NCurses is the New Curses software emulation of the original Curses and is available from the GNU folks at the Free Software Foundation. the computer system you’re using employs NCurses, not the original Curses. Because of that, we use NCurses to refer to the library and its functions.
+<a>Next page</a> </p>
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+          <span> <a href="#Tut"><button>main menu</button></a></span>
+           <span> 
+           <a href="#Tut"><button>Previous</button></a>
+            <a href="#Tut"><button>Next</button></a>
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+    <p>
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X (Twitter)</a> |
+        <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
+        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+    
+    <script src="/../../syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
