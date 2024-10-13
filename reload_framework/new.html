@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
+    <link rel="stylesheet" href="../../syntax_highlight//xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a>Blog</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a>Discord</a>
+            
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h5><i>Last updated: 12/5/24</i></h5>
+          <hr>
+          <h3>Displaying Images and 2D Textures in Raylib</h3>
+
+<p>When creating games or graphical applications, one essential aspect is rendering images and 2D textures on the screen.</p>
+
+<h4>Images vs. Textures</h4>
+
+<p>Before diving into code, it's crucial to distinguish between images and textures in Raylib:</p>
+
+<p>Image: This refers to data stored in CPU memory (RAM). It's used for manipulating pixel data (e.g., loading, modifying, or saving).</p>
+
+<h2>Texture: This represents data uploaded to GPU memory (VRAM), optimized for fast rendering. While you can’t modify a texture directly on the GPU, it allows for efficient drawing.</h2>
+
+<p>Raylib provides two primary ways to do this, each serving different needs depending on how you want to handle the image data. These methods are:</p>
+
+<ol>
+<li><p>Loading an image first, then converting it to a texture.</p></li>
+<li><p>Directly loading a texture.</p></li>
+</ol>
+
+<p>Let's dive into both methods, understand how they work, and when to use each approach.</p>
+
+<hr />
+
+<h4>Method 1: Load an Image First, Then Convert to a Texture</h4>
+
+<p>Raylib gives you the flexibility to load an image using the LoadImage() function, which loads the image into CPU memory. This is useful when you want to modify the image before displaying it. Once your image is ready, you can convert it into a GPU texture using LoadTextureFromImage() for rendering.</p>
+
+<p>Here’s an example:</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+int main() {
+    InitWindow(800, 600, "Raylib - Load Image then Texture");
+
+    // Step 1: Load an image (in CPU memory)
+    Image img = LoadImage("file_path/my_image.png");
+
+    // Optional: Modify the image before using it as a texture
+    ImageFlipVertical(&img);  // Example: Flip the image vertically
+
+    // Step 2: Convert the image to a texture (in GPU memory)
+    Texture2D texture = LoadTextureFromImage(img);
+
+    // Unload the image from CPU memory (we no longer need it)
+    UnloadImage(img);
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the texture
+        DrawTexture(texture, 100, 100, WHITE);
+
+        EndDrawing();
+    }
+
+    // Clean up resources
+    UnloadTexture(texture);
+    CloseWindow();
+
+    return 0;
+}
+</code>
+</pre>
+
+<h5>Why Use This Method?</h5>
+
+<p>This approach is ideal when you need to manipulate or process the image before rendering it. Some possible operations include:</p>
+
+<ul>
+<li><p>Flipping (as shown in the example),</p></li>
+<li><p>Resizing the image,</p></li>
+<li><p>Drawing onto the image using functions like ImageDraw().</p></li>
+</ul>
+
+<p>The key takeaway is that you load the image in CPU memory, perform modifications, and then upload it to the GPU as a texture when ready. Once it's uploaded, you can render the texture as usual, which benefits from GPU acceleration.</p>
+
+<h5>Pros:</h5>
+
+<p>Flexibility to edit the image before rendering.</p>
+
+<p>Useful for procedural generation or image processing.</p>
+
+<h5>Cons:</h5>
+
+<p>Slower if no image modifications are needed because of the additional CPU memory step.</p>
+
+<p>Takes up more memory briefly since the image is stored both on CPU and GPU memory during the process.</p>
+
+<hr />
+
+<h4>Method 2: Load a Texture Directly</h4>
+
+<p>The simpler and faster option for most use cases is to load an image directly as a texture using LoadTexture(). This skips the intermediate step of loading the image into CPU memory and sends it straight to the GPU, ready to be rendered.</p>
+
+<p>Here’s how you do it:</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+int main() {
+    InitWindow(800, 600, "Raylib - Load Texture Directly");
+
+    // Load the texture directly (in GPU memory)
+    Texture2D texture = LoadTexture("file_path/my_image.png");
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the texture
+        DrawTexture(texture, 100, 100, WHITE);
+
+        EndDrawing();
+    }
+
+    // Clean up resources
+    UnloadTexture(texture);
+    CloseWindow();
+
+    return 0;
+}
+</code>
+</pre>
+
+<h5>Why Use This Method?</h5>
+
+<p>This method is the most efficient way to load and display images if you don’t need to modify the image data. Since it goes straight to GPU memory, you skip any intermediate steps and can begin drawing the texture right away. For static images where no manipulation is required, this is the preferred approach.</p>
+
+<h5>Pros:</h5>
+
+<p>Faster since it loads directly into GPU memory.</p>
+
+<p>Simpler for static images that don’t need processing.</p>
+
+<h5>Cons:</h5>
+
+<p>You cannot modify the image data once it's loaded as a texture.</p>
+
+<p>Less flexibility for procedural manipulation or real-time changes.</p>
+
+<hr />
+
+<h4>Comparison: When to Use Each Method</h4>
+
+<p>Modifying Images: If your application needs to modify the image data (e.g., applying filters, resizing, flipping, etc.), use Method 1 (load as an image first).</p>
+
+<p>Fast Rendering: If you just need to display an image without any processing, use Method 2 (load directly as a texture). This saves you the step of handling CPU memory and goes straight to GPU for optimal performance.</p>
+
+<hr />
+
+<h4>Conclusion</h4>
+
+<p>Raylib provides you with flexible options for displaying images and textures in your 2D games or applications. If you need to modify an image before rendering, go with the Image + Texture approach. However, if you're looking for simplicity and performance, loading a texture directly is the way to go.</p>
+
+<p>By understanding the differences between these methods, you can make informed choices about how to handle images in your projects, ensuring the best performance and functionality for your needs.
+<br></p>
+
+<p>in the next page, we will look into them in more details</p>
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+                <!--empty-->
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+        <p>
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
+        <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
+        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+        <script src="../../syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

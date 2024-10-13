@@ -4,7 +4,8 @@
     <title>Governor's Basement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="style.css"/>
-    <link rel="stylesheet" href="/../../syntax_highlight/xt256.css"> <!-- Highlight.js theme -->
+    
+    <link rel="stylesheet" href="../../syntax_highlight//xt256.css"> <!-- Highlight.js theme -->
 </head>
 <body>
     <header class="header">
@@ -17,137 +18,107 @@
     
     <div class="panel">
         <nav class="navbar">
-            <a href="#">Ncurses</a>
-            <a>SDL</a>
-            <a>ImGui</a>
-            <a>Pygame</a>
             <a>Blog</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a>Discord</a>
+            
         </nav>
     </div>
 
     <main class="home">
         <div class="home-content">
-          <h3>Introduction</h3>
+          <h5><i>Last updated: 12/5/24</i></h5>
+          <hr>
+          <h3>Introduction to Game Programming for Beginners</h3>
 
-<p>This tutorial gather's heavily from other tutorials; most especially from the book "Programmers guide to ncurses" by Dan Gooking</p>
+<p>Creating your own video games is not only a rewarding experience, but it also teaches problem-solving, creativity, and logical thinking. In this introduction, we'll explore the basics of game programming, using a popular library called raylib.</p>
 
-<h3>installation</h3>
+<h4>What is Game Programming?</h4>
 
-<p>this tutorial is current with NCurses version 5.5.+. I assumes that you’re using a UNIX-like operating system (Linux,
-FreeBSD, Mac OS X, or some other OS based on UNIX), but you can windows as well via Cygwin.
-I also assume you can setup a project in your IDE of choice in order to get the code to run. Those kinds of instructions get out of date quickly so i wouldn't cover them in details.
-To install <code class="bound">ncurses</code>, follow these steps based on your operating system:</p>
-
-<h4><strong>On Linux:</strong></h4>
+<p>At its core, game programming is the process of creating interactive software that responds to user input, processes game logic, and renders graphics and sound in real time. A game typically consists of a few core elements:</p>
 
 <ol>
-<li><p><strong>Using a package manager:</strong></p>
-
-<ul>
-<li><strong>Debian/Ubuntu:</strong>
-<pre>
-<code class="language-shell">
-sudo apt-get update
-sudo apt-get install libncurses5-dev libncursesw5-dev
-</code>
-</pre>
-</li>
-<li><strong>Fedora:</strong>
-<pre>
-<code class="language-shell">
-sudo dnf install ncurses-devel
-</code>
-</pre>
-</li>
-<li><strong>Arch Linux:</strong>
-<pre>
-<code class="language-shell">
-sudo pacman -S ncurses
-</code>
-</pre>
-</li>
-</ul></li>
-<li><p><strong>From source:</strong>
-If you need the latest version or a custom build:</p>
-
-<ul>
-<li>Download the latest source code from the <a href="https://ftp.gnu.org/gnu/ncurses/">official GNU Ncurses page</a>.</li>
-<li>Extract the tarball:
-<code>bash
-tar -xvzf ncurses-&lt;version&gt;.tar.gz
-cd ncurses-&lt;version&gt;/
-</code></li>
-<li>Configure, compile, and install:
-<pre><code class="language-shell">
-./configure
-make
-sudo make install
-</code></pre></li>
-</ul></li>
+<li><p>Graphics: The visuals of the game (characters, backgrounds, objects).</p></li>
+<li><p>Game Loop: The repetitive cycle that updates the game and processes player input.</p></li>
+<li><p>Input Handling: Detecting and responding to actions like keyboard presses or mouse clicks.</p></li>
+<li><p>Physics and Logic: The rules that govern how things move and interact in the game world.</p></li>
+<li><p>Audio: Music and sound effects to enhance the game experience.</p></li>
 </ol>
 
-<h4><strong>On macOS:</strong></h4>
+<h5>Why Use raylib?</h5>
+
+<p>raylib is an open-source, C-based library designed to make game development simple and accessible. It abstracts much of the complexity involved in handling graphics, input, and audio, allowing you to focus on the fun parts of game design.</p>
+
+<p>Here are some reasons why raylib is a great choice for beginners:</p>
+
+<ul>
+<li><p>Simplicity: raylib’s API is designed to be intuitive and easy to use.</p></li>
+<li><p>Cross-platform: Games built with raylib can run on Windows, macOS, Linux, and even consoles.</p></li>
+<li><p>Lightweight: raylib is a lightweight library, which means it’s fast and efficient for 2D and 3D games.</p></li>
+</ul>
+
+<p>Key Concepts to Start With</p>
 
 <ol>
-<li><p><strong>Using Homebrew:</strong>
-<pre>
-<code class="language-shell">
-brew install ncurses
-</code>
-</pre>
-</p></li>
-<li><p><strong>From source:</strong></p>
-
-<ul>
-<li>Follow the same steps as for Linux using the source code from the GNU Ncurses page.</li>
-</ul></li>
+<li>Game Loop Every game has a loop that continuously runs while the game is active. The loop handles updating the game world, processing input, and drawing the game on the screen. In raylib, the game loop might look like this:</li>
 </ol>
 
-<h4><strong>On Windows:</strong></h4>
-
-<p><code>ncurses</code> isn't natively supported on Windows. However, you can use it with environments like Cygwin or WSL (Windows Subsystem for Linux).</p>
-
-<ul>
-<li><p><strong>Using Cygwin:</strong></p>
-
-<ul>
-<li>Install <code>ncurses</code> during the Cygwin setup process.</li>
-</ul></li>
-<li><p><strong>Using WSL:</strong></p>
-
-<ul>
-<li>Install it in your Linux distribution inside WSL as you would on a regular Linux system:
 <pre>
-<code class="language-shell">
-sudo apt-get install libncurses5-dev libncursesw5-dev
+<code class="language-c">
+while (!WindowShouldClose()) {
+    // Update game state
+    // Draw the game
+}
 </code>
 </pre>
-</li>
-</ul></li>
-</ul>
 
-<h4>Prerequisites</h4>
+<ol start="2">
+<li>Rendering (Drawing on the Screen) To display objects like characters or backgrounds, you need to "draw" them on the screen using raylib functions. For example:</li>
+</ol>
 
-<p>You should already:
-<ul>
-<li> Have basic C/C++ knowlegde (C mostly)</li>
-<li>know how to compile C/C++ programs, link libraries and in rare scenerios make use of Build Systems(optional)</li>
-</ul>
-</p>
+<pre>
+<code class="language-c">
+DrawCircle(200, 200, 50, RED);  // Draws a red circle
+DrawText("Hello, Game World!", 100, 100, 20, BLUE);  // Draws text
+</code>
+</pre>
 
-<h3>Curses or NCurses?</h3>
+<ol start="3">
+<li>Handling Input Games respond to user input, like pressing keys or moving the mouse. raylib makes this easy with functions like IsKeyPressed():</li>
+</ol>
 
-<p>The Curses library of terminal control functions has been with UNIX since the early 1980s. As such, it was part of the older versions of UNIX, which required complex licenses and such to be used. NCurses is the New Curses software emulation of the original Curses and is available from the GNU folks at the Free Software Foundation. the computer system you’re using employs NCurses, not the original Curses. Because of that, we use NCurses to refer to the library and its functions.
-<a>Next page</a> </p>
+<pre>
+<code class="language-c">
+if (IsKeyPressed(KEY_SPACE)) {
+    // Do something when the spacebar is pressed
+}
+</code>
+</pre>
+
+<ol start="4">
+<li>Updating Game Logic As the game runs, it needs to update the position of objects, check for collisions, and manage the game state. A simple example of moving a player character based on input might look like this:</li>
+</ol>
+
+<pre>
+<code class="language-c">
+Vector2 playerPosition = { 200, 200 };  // Starting position
+if (IsKeyDown(KEY_RIGHT)) playerPosition.x += 2;
+if (IsKeyDown(KEY_LEFT)) playerPosition.x -= 2;
+</code>
+</pre>
+
+<hr />
+
+<p>Now you have a basic understanding of game programming concepts.</p>
+
+<p><a>Next page</a>: Getting started</p>
 
         </div>
     </main>
     
         <footer class="footer">
-          <span> <a href="#Tut"><button>main menu</button></a></span>
-           <span> 
-           <a href="#Tut"><button>Previous</button></a>
-            <a href="#Tut"><button>Next</button></a>
+                <!--empty-->
             </span>
     </footer>
     <div>
@@ -155,19 +126,18 @@ sudo apt-get install libncurses5-dev libncursesw5-dev
     <h3>Stay Connected</h3>
     <p>Join our community, follow us, and stay updated:</p>
     
-    <p>
+        <p>
         <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
-        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X (Twitter)</a> |
+        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
         <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
-        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a>
+        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>
     </p>
 </div>
       <hr>
     <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
     <a>gpu.governor@gmail.com</a>
     </div>
-    
-    <script src="/../../syntax_highlight/highlight.min.js"></script>
+        <script src="../../syntax_highlight/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </body>
 </html>

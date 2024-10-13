@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
+    <link rel="stylesheet" href="../../syntax_highlight//xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a>Blog</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a>Discord</a>
+            
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h5><i>Last updated: 12/5/24</i></h5>
+          <hr>
+          <h3>Drawing Shapes in Raylib</h3>
+
+<p>In this tutorial, we'll explore how to draw basic shapes using Raylib. If you haven't set up your window yet, check out the first tutorial on window creation. Now, let’s focus on rendering various shapes.</p>
+
+<ol>
+<li>Drawing a Rectangle</li>
+</ol>
+
+<p>Rectangles are one of the simplest shapes to draw. Here's a basic example:</p>
+
+<pre>
+<code class="language-c">
+// Draw a solid rectangle
+DrawRectangle(100, 100, 200, 150, RED);
+</code>
+</pre>
+
+<p>This function takes five parameters:</p>
+
+<ul>
+<li><p>100, 100: The x and y coordinates of the top-left corner.</p></li>
+<li><p>200, 150: The width and height.</p></li>
+<li><p>RED: The fill color.</p></li>
+</ul>
+
+<p>If you want to add an outline instead of a filled shape, you can use:</p>
+
+<pre>
+<code class="language-c">
+DrawRectangleLines(100, 100, 200, 150, BLACK);
+</code>
+</pre>
+
+<ol start="2">
+<li>Drawing a Circle</li>
+</ol>
+
+<p>To draw a circle, Raylib provides the DrawCircle function:</p>
+
+<pre>
+<code class="language-c">
+// Draw a solid circle
+DrawCircle(300, 300, 50, BLUE);
+</code>
+</pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><p>300, 300: The x and y coordinates of the center.</p></li>
+<li><p>50: The radius.</p></li>
+<li><p>BLUE: The fill color.</p></li>
+</ul>
+
+<p>For just the outline, use:</p>
+
+<pre>
+<code class="language-c">
+DrawCircleLines(300, 300, 50, DARKBLUE);
+</code>
+</pre>
+
+<ol start="3">
+<li>Drawing a Triangle</li>
+</ol>
+
+<p>To draw triangles, use the DrawTriangle function:</p>
+
+<pre>
+<code class="language-c">
+// Draw a triangle
+Vector2 v1 = { 200, 300 };
+Vector2 v2 = { 300, 150 };
+Vector2 v3 = { 400, 300 };
+DrawTriangle(v1, v2, v3, GREEN);
+</code>
+</pre>
+
+<p>This function takes three Vector2 points representing the vertices of the triangle, followed by the color.
+<br>
+For an outlined version:</p>
+
+<pre>
+<code class="language-c">
+DrawTriangleLines(v1, v2, v3, DARKGREEN);
+</code>
+</pre>
+
+<ol start="4">
+<li>Drawing Lines</li>
+</ol>
+
+<p>Lines are useful for creating connections or boundaries. Here's an example:</p>
+
+<pre>
+<code class="language-c">
+// Draw a line
+DrawLine(150, 400, 450, 400, PURPLE);
+</code>
+</pre>
+
+<p>Parameters:</p>
+
+<ul>
+<li><p>150, 400: The starting x and y coordinates.</p></li>
+<li><p>450, 400: The ending x and y coordinates.</p></li>
+<li><p>PURPLE: The color of the line.</p></li>
+</ul>
+
+<ol start="5">
+<li>Drawing Polygons (Advanced)</li>
+</ol>
+
+<p>If you're looking to get more creative, Raylib also supports drawing regular polygons:</p>
+
+<pre>
+<code class="language-c">
+// Draw a polygon with 6 sides (hexagon)
+DrawPoly((Vector2){ 300, 200 }, 6, 50, 0, ORANGE);
+</code>
+</pre>
+
+<p>Here, the DrawPoly function takes:</p>
+
+<ul>
+<li><p>The position of the center of the polygon.</p></li>
+<li><p>The number of sides.</p></li>
+<li><p>The radius of the circumscribed circle.</p></li>
+<li><p>The rotation angle.</p></li>
+<li><p>The fill color.</p></li>
+</ul>
+
+<hr />
+
+<p>Now let's try to combine the above shape functions to our program :</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+int main (){
+  InitWindow(800,600,"Shape renderering");
+  SetTargetFPS(30);
+  while(!WindowShouldClose()){
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    // Draw a triangle
+Vector2 v1 = { 200, 300 };
+Vector2 v2 = { 300, 150 };
+Vector2 v3 = { 400, 300 };
+DrawTriangle(v1, v2, v3, GREEN);
+    EndDrawing();
+  }
+  CloseWindow();
+}
+</code>
+</pre>
+
+<p>i only just draw a triangle which is considered the "hello world" of Graphics programming, this was my output :</p>
+
+<h2><img src="files/" alt="triangle" /></h2>
+
+<p>i expect you to pratice and play with all the shapes, this is all for today's tutorial.
+In the next tutorial we will learn how to load images and texture
+<a>Next page</a></p>
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+                <!--empty-->
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+        <p>
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
+        <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
+        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+        <script src="../../syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

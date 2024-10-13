@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
+    <link rel="stylesheet" href="../../syntax_highlight//xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a>Blog</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a>Discord</a>
+            
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h5><i>Last updated: 12/5/24</i></h5>
+          <hr>
+          <h3>Getting Started with Raylib</h3>
+
+<p>Create a main.c or main.cpp file and copy this code:</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+// Set the width and height of the game window
+const int screenWidth = 640;
+const int screenHeight = 480;
+
+int main() {
+
+    // Open the game window
+    InitWindow(screenWidth, screenHeight, "my first raylib window");
+
+    // Set the game to run at 60 frames per second
+    SetTargetFPS(60);
+
+    // Game loop
+    while (!WindowShouldClose()) {
+
+        // Start drawing
+        BeginDrawing();
+        // Clear the screen with a white background
+        ClearBackground(RAYWHITE);
+
+        // Put your game code here
+
+        // Stop drawing
+        EndDrawing();
+    }
+
+    // Close the window and end the game
+    CloseWindow();
+    return 0;
+}
+</code>
+</pre>
+
+<p>This program is a simple example of how all Raylib programs work. It opens a window that is 640 pixels wide and 480 pixels tall, with the title "my first raylib window". The game will try to run at 60 frames per second (FPS), meaning the game will aim to update and draw the screen 60 times every second. This makes sure the game looks smooth no matter which computer it runs on.</p>
+
+<p>If you run the program, you will see this window:</p>
+
+<img src="files/img/02_00_my_first_window.png" alt="my first raylib window" />.
+
+<p>Right now, we have an empty window, so let's draw something in it.
+To draw text on the screen, we can use the DrawText() function inside the game loop:</p>
+
+<pre>
+<code class="language-c">
+ while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        // Draw some text on the screen
+        DrawText("haha hi, you've been on my mind", 100, 100, 30, RED);
+        EndDrawing();
+    }
+</code>
+</pre>The DrawText() function has 5 parts:
+
+<ol>
+<li><p>The first part is the text you want to draw. Here, I chose "haha hi, you've been on my mind".</p></li>
+<li><p>100, 100 are the x and y coordinates, which tell the program where to place the text on the screen. This means the text will start at position (100, 100).</p></li>
+<li><p>The next number, 30, is the size of the font.</p></li>
+<li><p>RED is the color of the text.</p></li>
+</ol>
+
+<p>If you run the program, you will see this:</p>
+
+<img src="files/img/02_01_drawtext.png" alt="my draw text" />.
+
+<p>Now, you know how to create a window and draw text in it.
+If you followed the steps correctly, your main.c file should look like this:</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+// Set the width and height of the game window
+const int screenWidth = 640;
+const int screenHeight = 480;
+
+int main() {
+
+    // Open the game window
+    InitWindow(screenWidth, screenHeight, "my first raylib window");
+
+    // Set the game to run at 60 frames per second
+    SetTargetFPS(60);
+
+    // Game loop
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        // Draw some text on the screen
+        DrawText("haha hi, you've been on my mind", 100, 100, 30, RED);
+        EndDrawing();
+    }
+
+    // Close the window and end the game
+    CloseWindow();
+    return 0;
+}
+</code>
+</pre>In the next tutorial, we will learn how to load images and textures.
+
+<p><a>Next page</a>: Loading images and textures</p>
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+                <!--empty-->
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+        <p>
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
+        <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
+        <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+        <script src="../../syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
