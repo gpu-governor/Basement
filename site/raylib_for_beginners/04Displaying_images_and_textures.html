@@ -18,10 +18,10 @@
     
     <div class="panel">
         <nav class="navbar">
-            <a>Blog</a>
+            <a href="https://gpu-governor.github.io/Basement/">Home</a>
             <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
             <a>Udemy</a>
-            <a>Discord</a>
+            <a href="https://discord.gg/QM97pDZHtY">Discord</a>
             
         </nav>
     </div>
@@ -34,7 +34,7 @@
 
 <p>When creating games or graphical applications, one essential aspect is rendering images and 2D textures on the screen.</p>
 
-<h4>Images vs. Textures</h4>
+<h4 style="color: #00abf0;">Images vs. Textures</h4>
 
 <p>Before diving into code, it's crucial to distinguish between images and textures in Raylib:</p>
 
@@ -53,7 +53,7 @@
 
 <hr />
 
-<h4>Method 1: Load an Image First, Then Convert to a Texture</h4>
+<h4 style="color: #00abf0;">Method 1: Load an Image First, Then Convert to a Texture</h4>
 
 <p>Raylib gives you the flexibility to load an image using the LoadImage() function, which loads the image into CPU memory. This is useful when you want to modify the image before displaying it. Once your image is ready, you can convert it into a GPU texture using LoadTextureFromImage() for rendering.</p>
 
@@ -97,7 +97,7 @@ int main() {
 </code>
 </pre>
 
-<h5>Why Use This Method?</h5>
+<h5 style="color: #00abf0;">Why Use This Method?</h5>
 
 <p>This approach is ideal when you need to manipulate or process the image before rendering it. Some possible operations include:</p>
 
@@ -109,13 +109,13 @@ int main() {
 
 <p>The key takeaway is that you load the image in CPU memory, perform modifications, and then upload it to the GPU as a texture when ready. Once it's uploaded, you can render the texture as usual, which benefits from GPU acceleration.</p>
 
-<h5>Pros:</h5>
+<h5 style="color: #00abf0;">Pros:</h5>
 
 <p>Flexibility to edit the image before rendering.</p>
 
 <p>Useful for procedural generation or image processing.</p>
 
-<h5>Cons:</h5>
+<h5 style="color: #00abf0;">Cons:</h5>
 
 <p>Slower if no image modifications are needed because of the additional CPU memory step.</p>
 
@@ -123,7 +123,7 @@ int main() {
 
 <hr />
 
-<h4>Method 2: Load a Texture Directly</h4>
+<h4 style="color: #00abf0;">Method 2: Load a Texture Directly</h4>
 
 <p>The simpler and faster option for most use cases is to load an image directly as a texture using LoadTexture(). This skips the intermediate step of loading the image into CPU memory and sends it straight to the GPU, ready to be rendered.</p>
 
@@ -158,17 +158,17 @@ int main() {
 </code>
 </pre>
 
-<h5>Why Use This Method?</h5>
+<h5 style="color: #00abf0;">Why Use This Method?</h5>
 
 <p>This method is the most efficient way to load and display images if you don’t need to modify the image data. Since it goes straight to GPU memory, you skip any intermediate steps and can begin drawing the texture right away. For static images where no manipulation is required, this is the preferred approach.</p>
 
-<h5>Pros:</h5>
+<h5 style="color: #00abf0;">Pros:</h5>
 
 <p>Faster since it loads directly into GPU memory.</p>
 
 <p>Simpler for static images that don’t need processing.</p>
 
-<h5>Cons:</h5>
+<h5 style="color: #00abf0;">Cons:</h5>
 
 <p>You cannot modify the image data once it's loaded as a texture.</p>
 
@@ -176,7 +176,7 @@ int main() {
 
 <hr />
 
-<h4>Comparison: When to Use Each Method</h4>
+<h4 style="color: #00abf0;">Comparison: When to Use Each Method</h4>
 
 <p>Modifying Images: If your application needs to modify the image data (e.g., applying filters, resizing, flipping, etc.), use Method 1 (load as an image first).</p>
 
@@ -184,7 +184,7 @@ int main() {
 
 <hr />
 
-<h4>Conclusion</h4>
+<h4 style="color: #00abf0;">Conclusion</h4>
 
 <p>Raylib provides you with flexible options for displaying images and textures in your 2D games or applications. If you need to modify an image before rendering, go with the Image + Texture approach. However, if you're looking for simplicity and performance, loading a texture directly is the way to go.</p>
 
@@ -206,7 +206,7 @@ int main() {
     <p>Join our community, follow us, and stay updated:</p>
     
         <p>
-        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://discord.gg/QM97pDZHtY" target="_blank">Discord</a> |
         <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
         <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
         <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>

@@ -18,10 +18,10 @@
     
     <div class="panel">
         <nav class="navbar">
-            <a>Blog</a>
+            <a href="https://gpu-governor.github.io/Basement/">Home</a>
             <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
             <a>Udemy</a>
-            <a>Discord</a>
+            <a href="https://discord.gg/QM97pDZHtY">Discord</a>
             
         </nav>
     </div>
@@ -170,30 +170,39 @@ DrawPoly((Vector2){ 300, 200 }, 6, 50, 0, ORANGE);
 <code class="language-c">
 #include "raylib.h"
 int main (){
-  InitWindow(800,600,"Shape renderering");
+  InitWindow(640, 480, "Shape rendering");
   SetTargetFPS(30);
-  while(!WindowShouldClose()){
+
+  // Define the triangle vertices in counter-clockwise order
+  Vector2 v1 = { 200, 300 };
+  Vector2 v2 = { 400, 300 };
+  Vector2 v3 = { 300, 150 };
+
+  while (!WindowShouldClose()){
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    // Draw a triangle
-Vector2 v1 = { 200, 300 };
-Vector2 v2 = { 300, 150 };
-Vector2 v3 = { 400, 300 };
-DrawTriangle(v1, v2, v3, GREEN);
+    
+    // Draw the triangle
+    DrawTriangle(v1, v2, v3, GREEN);
+    
     EndDrawing();
   }
+
   CloseWindow();
+  return 0;
 }
 </code>
 </pre>
 
 <p>i only just draw a triangle which is considered the "hello world" of Graphics programming, this was my output :</p>
 
-<h2><img src="files/" alt="triangle" /></h2>
+<h2><img src="files/img/03_01triangle.png" alt="triangle" /></h2>
 
 <p>i expect you to pratice and play with all the shapes, this is all for today's tutorial.
-In the next tutorial we will learn how to load images and texture
-<a>Next page</a></p>
+In the next tutorial we will learn how to load images and texture</p>
+<p><a href="04Displaying_images_and_textures.html">Next page</a>: images and texture</p>
+<br>
+<p><a href="02Displaying_an_empty_window.html">previous page</a>Displaying an empty window</p>
 
         </div>
     </main>
@@ -208,7 +217,7 @@ In the next tutorial we will learn how to load images and texture
     <p>Join our community, follow us, and stay updated:</p>
     
         <p>
-        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank">Discord</a> |
+        <a href="https://discord.gg/QM97pDZHtY" target="_blank">Discord</a> |
         <a href="https://x.com/YOUR_X_PROFILE" target="_blank">X</a> |
         <a href="https://github.com/YOUR_GITHUB_PROFILE" target="_blank">GitHub</a> |
         <a href="https://youtube.com/YOUR_YOUTUBE_CHANNEL" target="_blank">YouTube</a> | <a>Donations</a>

@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Consolas',Sans-Serif;
+  font-family: "consolas",Sans-Serif;
 }
 
 body{
@@ -163,3 +163,7 @@ table {
     padding: 5px; /* Optional: add some padding for better look */
    /* border: 1px solid #ddd; */ /* Optional: border for styling */
 }
+
+p{
+  font-family: "consolas",Sans-Serif;
+ }

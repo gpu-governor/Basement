@@ -1,170 +1,182 @@
-### Displaying Images and 2D Textures in Raylib
+### How to Load Images in Raylib Using Image
 
-When creating games or graphical applications, one essential aspect is rendering images and 2D textures on the screen.
+Raylib simplifies image handling by offering a straightforward API to load, process, and draw images. In this tutorial, we will cover how to load an image using the Image structure, and how to manipulate it before rendering it on the screen.
 
-#### Images vs. Textures
+#### What is an Image in Raylib?
 
-Before diving into code, it's crucial to distinguish between images and textures in Raylib:
+In Raylib, an Image is a 2D bitmap data structure used for manipulation and loading purposes. It stores the image's pixel data in CPU memory, which allows you to perform operations like resizing, cropping, or even pixel-by-pixel modifications before converting it into a texture for GPU rendering.
 
-Image: This refers to data stored in CPU memory (RAM). It's used for manipulating pixel data (e.g., loading, modifying, or saving).
-
-Texture: This represents data uploaded to GPU memory (VRAM), optimized for fast rendering. While you can’t modify a texture directly on the GPU, it allows for efficient drawing.
----
-Raylib provides two primary ways to do this, each serving different needs depending on how you want to handle the image data. These methods are:
-
-1. Loading an image first, then converting it to a texture.
-
-
-2. Directly loading a texture.
-
-
-
-Let's dive into both methods, understand how they work, and when to use each approach.
+> Note: An Image is different from a Texture2D. Once an Image is loaded and processed, it can be converted into a Texture2D for rendering on the screen, which resides in GPU memory.
 
 
 ---
+#### Basic Steps to Load an Image
 
-#### Method 1: Load an Image First, Then Convert to a Texture
+To load and display an image in Raylib, you need to follow these basic steps:
 
-Raylib gives you the flexibility to load an image using the LoadImage() function, which loads the image into CPU memory. This is useful when you want to modify the image before displaying it. Once your image is ready, you can convert it into a GPU texture using LoadTextureFromImage() for rendering.
+1. Initialize Raylib.
 
-Here’s an example:
+
+2. Load the Image from a file.
+
+
+3. Convert the Image to a Texture.
+
+
+4. Render the Texture on the screen.
+
+
+5. Unload resources after use.
+
+
+
+Let’s walk through an example step-by-step.
+
+Step 1: Initialize Raylib
+
+Before loading any images, you need to initialize Raylib with the proper window size and other settings. You can do this by calling InitWindow() and setting the dimensions of your game window.
+
 <pre>
 <code class="language-c">
 #include "raylib.h"
 
 int main() {
-    InitWindow(800, 600, "Raylib - Load Image then Texture");
-    
-    // Step 1: Load an image (in CPU memory)
-    Image img = LoadImage("file_path/my_image.png");
+    // Initialize the window
+    InitWindow(800, 600, "Image Loading Example");
 
-    // Optional: Modify the image before using it as a texture
-    ImageFlipVertical(&img);  // Example: Flip the image vertically
+    // Set the target FPS (frames per second)
+    SetTargetFPS(60);
 
-    // Step 2: Convert the image to a texture (in GPU memory)
-    Texture2D texture = LoadTextureFromImage(img);
-
-    // Unload the image from CPU memory (we no longer need it)
-    UnloadImage(img);
-    
+    // Main game loop
     while (!WindowShouldClose()) {
+        // Update and draw the game
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
-        // Draw the texture
-        DrawTexture(texture, 100, 100, WHITE);
-
+        
+        // TODO : image drawing
+        
         EndDrawing();
     }
 
-    // Clean up resources
-    UnloadTexture(texture);
+    // Close window and OpenGL context
     CloseWindow();
-    
+
     return 0;
 }
 </code>
 </pre>
-##### Why Use This Method?
 
-This approach is ideal when you need to manipulate or process the image before rendering it. Some possible operations include:
+Step 2: Load an Image from a File
 
-* Flipping (as shown in the example),
+To load an image, use the LoadImage() function, which takes a file path as its argument and returns an Image struct. In this example, let’s assume we have an image called image.png located in the same directory as our executable.
 
-* Resizing the image,
+<pre>
+<code class="language-c">
+// Load the image from a file
+Image my_image = LoadImage("image.png");
+</code>
+</pre>
+Step 3: Convert the Image to a Texture
 
-* Drawing onto the image using functions like ImageDraw().
+Since Raylib renders using OpenGL, it’s necessary to convert the Image into a Texture2D before rendering. This is done using LoadTextureFromImage().
 
+<pre>
+<code class="language-c">
+// Convert the image to a texture for rendering
+Texture2D texture = LoadTextureFromImage(my_image);
 
-The key takeaway is that you load the image in CPU memory, perform modifications, and then upload it to the GPU as a texture when ready. Once it's uploaded, you can render the texture as usual, which benefits from GPU acceleration.
+// Once converted, you no longer need the Image object in CPU memory
+UnloadImage(my_image);
+</code>
+</pre>
+Step 4: Draw the Texture
 
-##### Pros:
+Now that we have the texture ready, we can render it on the screen using the DrawTexture() function.
+<pre>
+<code class="language-c">
+// In the game loop, render the texture
+while (!WindowShouldClose()) {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
 
-Flexibility to edit the image before rendering.
+    // Draw the texture at position (200, 150)
+    DrawTexture(texture, 200, 150, WHITE);
 
-Useful for procedural generation or image processing.
+    EndDrawing();
+}
+</code>
+</pre>
+Step 5: Unload Resources
 
+Once you’re done with the texture, make sure to unload it to free up GPU memory. This is done with the UnloadTexture() function.
+<pre>
+<code class="language-c">
+// Before closing the window, unload the texture
+UnloadTexture(texture);
+</code>
+</pre>
+Full Example Code
 
-##### Cons:
-
-Slower if no image modifications are needed because of the additional CPU memory step.
-
-Takes up more memory briefly since the image is stored both on CPU and GPU memory during the process.
-
-
-
----
-
-#### Method 2: Load a Texture Directly
-
-The simpler and faster option for most use cases is to load an image directly as a texture using LoadTexture(). This skips the intermediate step of loading the image into CPU memory and sends it straight to the GPU, ready to be rendered.
-
-Here’s how you do it:
+Here’s the complete code for loading and displaying an image:
 <pre>
 <code class="language-c">
 #include "raylib.h"
 
 int main() {
-    InitWindow(800, 600, "Raylib - Load Texture Directly");
+    // Initialize window
+    InitWindow(800, 600, "Image Loading Example");
 
-    // Load the texture directly (in GPU memory)
-    Texture2D texture = LoadTexture("file_path/my_image.png");
-    
+    // Load an image and convert it to a texture
+    Image my_image = LoadImage("image.png");
+    Texture2D texture = LoadTextureFromImage(my_image);
+    UnloadImage(my_image);  // We no longer need the CPU-side image data
+
+    // Set target FPS
+    SetTargetFPS(60);
+
+    // Main game loop
     while (!WindowShouldClose()) {
+        // Update and draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Draw the texture
-        DrawTexture(texture, 100, 100, WHITE);
+        // Draw the texture on the screen
+        DrawTexture(texture, 200, 150, WHITE);
 
         EndDrawing();
     }
 
-    // Clean up resources
+    // Unload the texture when done
     UnloadTexture(texture);
+
+    // Close window and OpenGL context
     CloseWindow();
-    
+
     return 0;
 }
 </code>
 </pre>
-##### Why Use This Method?
+Conclusion
 
-This method is the most efficient way to load and display images if you don’t need to modify the image data. Since it goes straight to GPU memory, you skip any intermediate steps and can begin drawing the texture right away. For static images where no manipulation is required, this is the preferred approach.
+Raylib makes image loading and rendering simple with its Image and Texture2D types. The steps are straightforward:
 
-##### Pros:
-
-Faster since it loads directly into GPU memory.
-
-Simpler for static images that don’t need processing.
+1. Load an Image using LoadImage().
 
 
-##### Cons:
+2. Convert it to a Texture2D with LoadTextureFromImage().
 
-You cannot modify the image data once it's loaded as a texture.
 
-Less flexibility for procedural manipulation or real-time changes.
+3. Render it using DrawTexture().
+
+
+4. Unload your resources to prevent memory leaks.
 
 
 
----
-
-#### Comparison: When to Use Each Method
-
-Modifying Images: If your application needs to modify the image data (e.g., applying filters, resizing, flipping, etc.), use Method 1 (load as an image first).
-
-Fast Rendering: If you just need to display an image without any processing, use Method 2 (load directly as a texture). This saves you the step of handling CPU memory and goes straight to GPU for optimal performance.
-
+Using these tools, you can easily integrate 2D images into your game, whether for backgrounds, characters, or UI elements. Once you grasp these basics, you can start exploring other powerful features Raylib offers for image manipulation.
 
 
 ---
 
-#### Conclusion
+Feel free to adjust or expand this article based on your blog’s style!
 
-Raylib provides you with flexible options for displaying images and textures in your 2D games or applications. If you need to modify an image before rendering, go with the Image + Texture approach. However, if you're looking for simplicity and performance, loading a texture directly is the way to go.
-
-By understanding the differences between these methods, you can make informed choices about how to handle images in your projects, ensuring the best performance and functionality for your needs.
-<br>
-
-in the next page, we will look into them in more details

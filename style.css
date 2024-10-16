@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Consolas,Sans-Serif;
+  font-family: "consolas",Sans-Serif;
 }
 
 body{
@@ -146,4 +146,8 @@ table {
    /* bound */
    .bound{
      background: pink;
+   }
+
+   p{
+    font-family: "consolas",Sans-Serif;
    }
