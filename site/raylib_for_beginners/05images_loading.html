@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
+    <link rel="stylesheet" href="syntax_highlight/xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a href="https://gpu-governor.github.io/Basement/">Home</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a href="https://discord.gg/QM97pDZHtY">Discord</a>
+            
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h5><i>Last updated: 16/10/24</i></h5>
+          <hr>
+          <h3>How to Load Images in Raylib Using Image</h3>
+
+<p>In Raylib, an Image is a 2D bitmap data structure used for manipulation and loading purposes. It stores the image's pixel data in CPU memory, which allows you to perform operations like resizing, cropping, or even pixel-by-pixel modifications before converting it into a texture for GPU rendering.</p>
+
+<blockquote>
+  <p>Note: An Image is different from a Texture2D. Once an Image is loaded and processed, it can be converted into a Texture2D for rendering on the screen, which resides in GPU memory.</p>
+</blockquote>
+
+<hr />
+
+<h4 style="color: #00abf0;">Basic Steps to Load an Image</h4>
+
+<p>To load and display an image in Raylib, you need to follow these basic steps:</p>
+
+<ol>
+<li><p>Initialize Raylib.</p></li>
+<li><p>Load the Image from a file.</p></li>
+<li><p>Convert the Image to a Texture.</p></li>
+<li><p>Render the Texture on the screen.</p></li>
+<li><p>Unload resources after use.</p></li>
+</ol>
+
+<p>Let’s walk through an example step-by-step.</p>
+
+<p style="color: #00abf0;">Step 1: Initialize Raylib</p>
+
+<p>Before loading any images, you need to initialize Raylib with the proper window size and other settings. You can do this by calling InitWindow() and setting the dimensions of your game window.</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+int main() {
+    // Initialize the window
+    InitWindow(800, 600, "Image Loading Example");
+
+    // Set the target FPS (frames per second)
+    SetTargetFPS(60);
+
+    // Main game loop
+    while (!WindowShouldClose()) {
+        // Update and draw the game
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // TODO : image drawing
+
+        EndDrawing();
+    }
+
+    // Close window and OpenGL context
+    CloseWindow();
+
+    return 0;
+}
+</code>
+</pre>
+
+<p style="color: #00abf0;">Step 2: Load an Image from a File</p>
+
+<p>To load an image, use the LoadImage() function, which takes a file path as its argument and returns an Image struct. In this example, let’s assume we have an image called image.png located in the same directory as our executable.</p>
+
+<pre>
+<code class="language-c">
+// Load the image from a file
+Image my_image = LoadImage("image.png");
+</code>
+</pre>
+
+<p style="color: #00abf0;">Step 3: Convert the Image to a Texture</p>
+
+<p>Since Raylib renders using OpenGL, it’s necessary to convert the Image into a Texture2D before rendering. This is done using LoadTextureFromImage().</p>
+
+<pre>
+<code class="language-c">
+// Convert the image to a texture for rendering
+Texture2D texture = LoadTextureFromImage(my_image);
+
+// Once converted, you no longer need the Image object in CPU memory
+UnloadImage(my_image);
+</code>
+</pre>
+
+<p style="color: #00abf0;">Step 4: Draw the Texture</p>
+
+<p>Now that we have the texture ready, we can render it on the screen using the DrawTexture() function.</p>
+
+<pre>
+<code class="language-c">
+// In the game loop, render the texture
+while (!WindowShouldClose()) {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    // Draw the texture at position (200, 150)
+    DrawTexture(texture, 200, 150, WHITE);
+
+    EndDrawing();
+}
+</code>
+</pre>
+
+<p style="color: #00abf0;">Step 5: Unload Resources</p>
+
+<p>Once you’re done with the texture, make sure to unload it to free up GPU memory. This is done with the UnloadTexture() function.</p>
+
+<pre>
+<code class="language-c">
+// Before closing the window, unload the texture
+UnloadTexture(texture);
+</code>
+</pre>
+
+<p style="color: #00abf0;">Full Example Code</p>
+
+<p>Here’s the complete code for loading and displaying an image:</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+int main() {
+    // Initialize window
+    InitWindow(800, 600, "Image Loading Example");
+
+    // Load an image and convert it to a texture
+    Image my_image = LoadImage("image.png");
+    Texture2D texture = LoadTextureFromImage(my_image);
+    UnloadImage(my_image);  // We no longer need the CPU-side image data
+
+    // Set target FPS
+    SetTargetFPS(60);
+
+    // Main game loop
+    while (!WindowShouldClose()) {
+        // Update and draw
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the texture on the screen
+        DrawTexture(texture, 200, 150, WHITE);
+
+        EndDrawing();
+    }
+
+    // Unload the texture when done
+    UnloadTexture(texture);
+
+    // Close window and OpenGL context
+    CloseWindow();
+
+    return 0;
+}
+</code>
+</pre>
+<p>In my case, i loaded an animal photo.png i downloaded online. Here's the output :</p>
+<img src="files/Img/05_01_animal.png">
+<p>And as you see, the image didn't fit properly to the screen so in the upcoming lessons we will learn how to modify images</p>
+<p style="color: #00abf0;">Conclusion</p>
+
+<p>Raylib doesn’t support JPEG images by default, but you can enable it with precompiled binaries that include JPEG support. In this tutorial, all images are in PNG format, so you won’t need to worry about JPEG files.
+    Raylib makes image loading and rendering simple with its Image and Texture2D types. The steps are straightforward:</p>
+
+<ol>
+<li><p>Load an Image using LoadImage().</p></li>
+<li><p>Convert it to a Texture2D with LoadTextureFromImage().</p></li>
+<li><p>Render it using DrawTexture().</p></li>
+<li><p>Unload your resources to prevent memory leaks.</p></li>
+</ol>
+
+<p>Using these tools, you can easily integrate 2D images into your game, whether for backgrounds, characters, or UI elements. Once you grasp these basics, you can start exploring other powerful features Raylib offers for image manipulation.</p>
+
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+                <!--empty-->
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+        <p>
+        <a href="https://discord.gg/QM97pDZHtY" target="_blank">Discord</a> |
+        <a href="https://x.com/gpu_governor" target="_blank">X</a> |
+        <a href="https://github.com/gpu-governor" target="_blank">GitHub</a> |
+        <a href="https://www.youtube.com/@GPU_Governor" target="_blank">YouTube</a> | <a>Donations</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+        <script src="syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
