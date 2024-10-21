@@ -1,182 +1,64 @@
-### How to Load Images in Raylib Using Image
+### Working with 2D Textures in Raylib
 
-Raylib simplifies image handling by offering a straightforward API to load, process, and draw images. In this tutorial, we will cover how to load an image using the Image structure, and how to manipulate it before rendering it on the screen.
+In previous tutorials we first created an image then convert it to a texture, which is cool but however it is more faster to load it as texture directly by skipping the image function. In this tutorial, we’ll show you how to load and display a 2D texture in Raylib. Along the way, we’ll also mention some other useful functions for drawing textures in different ways.
 
-#### What is an Image in Raylib?
+#### Step 1: Loading a Texture
 
-In Raylib, an Image is a 2D bitmap data structure used for manipulation and loading purposes. It stores the image's pixel data in CPU memory, which allows you to perform operations like resizing, cropping, or even pixel-by-pixel modifications before converting it into a texture for GPU rendering.
-
-> Note: An Image is different from a Texture2D. Once an Image is loaded and processed, it can be converted into a Texture2D for rendering on the screen, which resides in GPU memory.
-
-
----
-#### Basic Steps to Load an Image
-
-To load and display an image in Raylib, you need to follow these basic steps:
-
-1. Initialize Raylib.
-
-
-2. Load the Image from a file.
-
-
-3. Convert the Image to a Texture.
-
-
-4. Render the Texture on the screen.
-
-
-5. Unload resources after use.
-
-
-
-Let’s walk through an example step-by-step.
-
-Step 1: Initialize Raylib
-
-Before loading any images, you need to initialize Raylib with the proper window size and other settings. You can do this by calling InitWindow() and setting the dimensions of your game window.
-
+The first step is loading an image as a texture using Raylib’s LoadTexture() function.
 <pre>
 <code class="language-c">
 #include "raylib.h"
 
-int main() {
-    // Initialize the window
-    InitWindow(800, 600, "Image Loading Example");
+int main(void) {
+    InitWindow(640, 480, "Raylib - 2D Textures Tutorial");
 
-    // Set the target FPS (frames per second)
-    SetTargetFPS(60);
+    // Load texture from file
+    Texture2D texture = LoadTexture("resources/image.png");
 
-    // Main game loop
     while (!WindowShouldClose()) {
-        // Update and draw the game
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        
-        // TODO : image drawing
-        
-        EndDrawing();
-    }
-
-    // Close window and OpenGL context
-    CloseWindow();
-
-    return 0;
-}
-</code>
-</pre>
-
-Step 2: Load an Image from a File
-
-To load an image, use the LoadImage() function, which takes a file path as its argument and returns an Image struct. In this example, let’s assume we have an image called image.png located in the same directory as our executable.
-
-<pre>
-<code class="language-c">
-// Load the image from a file
-Image my_image = LoadImage("image.png");
-</code>
-</pre>
-Step 3: Convert the Image to a Texture
-
-Since Raylib renders using OpenGL, it’s necessary to convert the Image into a Texture2D before rendering. This is done using LoadTextureFromImage().
-
-<pre>
-<code class="language-c">
-// Convert the image to a texture for rendering
-Texture2D texture = LoadTextureFromImage(my_image);
-
-// Once converted, you no longer need the Image object in CPU memory
-UnloadImage(my_image);
-</code>
-</pre>
-Step 4: Draw the Texture
-
-Now that we have the texture ready, we can render it on the screen using the DrawTexture() function.
-<pre>
-<code class="language-c">
-// In the game loop, render the texture
-while (!WindowShouldClose()) {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-
-    // Draw the texture at position (200, 150)
-    DrawTexture(texture, 200, 150, WHITE);
-
-    EndDrawing();
-}
-</code>
-</pre>
-Step 5: Unload Resources
-
-Once you’re done with the texture, make sure to unload it to free up GPU memory. This is done with the UnloadTexture() function.
-<pre>
-<code class="language-c">
-// Before closing the window, unload the texture
-UnloadTexture(texture);
-</code>
-</pre>
-Full Example Code
-
-Here’s the complete code for loading and displaying an image:
-<pre>
-<code class="language-c">
-#include "raylib.h"
-
-int main() {
-    // Initialize window
-    InitWindow(800, 600, "Image Loading Example");
-
-    // Load an image and convert it to a texture
-    Image my_image = LoadImage("image.png");
-    Texture2D texture = LoadTextureFromImage(my_image);
-    UnloadImage(my_image);  // We no longer need the CPU-side image data
-
-    // Set target FPS
-    SetTargetFPS(60);
-
-    // Main game loop
-    while (!WindowShouldClose()) {
-        // Update and draw
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Draw the texture on the screen
-        DrawTexture(texture, 200, 150, WHITE);
+        // Draw the texture at position (200, 200)
+        DrawTexture(texture, 200, 200, WHITE);
 
         EndDrawing();
     }
 
-    // Unload the texture when done
+    // Unload texture and close window
     UnloadTexture(texture);
-
-    // Close window and OpenGL context
     CloseWindow();
 
     return 0;
 }
 </code>
 </pre>
-Conclusion
 
-Raylib makes image loading and rendering simple with its Image and Texture2D types. The steps are straightforward:
+#### Step 2: Drawing the Texture
 
-1. Load an Image using LoadImage().
+In this example, we load an image called image.png and draw it on the screen using DrawTexture() at coordinates (200, 200). The function is simple and perfect for when you want to display a full image on the screen without any transformations.
 
+#### Step 3: Other Useful DrawTexture Functions
 
-2. Convert it to a Texture2D with LoadTextureFromImage().
+While DrawTexture() is the most basic way to display a texture, Raylib offers a few more advanced functions that can come in handy:
 
+DrawTextureEx(): This function allows you to scale and rotate textures easily. If you want to make a texture bigger or rotate it around a point, use DrawTextureEx(). It's useful for basic transformations without needing extra code.
 
-3. Render it using DrawTexture().
+DrawTexturePro(): If you need more control over how your texture is displayed, such as changing its size, flipping it, or applying complex transformations, DrawTexturePro() is the way to go. This function is more flexible but requires you to set up source and destination rectangles, so it’s more advanced.
 
+DrawTextureRec(): Use this function when you want to draw only a part of the texture. This is great for sprite sheets, where you have multiple images stored in one file and need to pick specific sections to display.
 
-4. Unload your resources to prevent memory leaks.
-
-
-
-Using these tools, you can easily integrate 2D images into your game, whether for backgrounds, characters, or UI elements. Once you grasp these basics, you can start exploring other powerful features Raylib offers for image manipulation.
+DrawTextureTiled(): If you want to create repeating patterns using your texture, DrawTextureTiled() can be useful. It’s a quick way to fill an area with the same image repeated over and over.
 
 
----
+Each of these functions is designed to give you more control over how textures are displayed on the screen. You won’t need them for simple drawings, but as your projects get more complex (like animations or tiled backgrounds), they will become very helpful.
 
-Feel free to adjust or expand this article based on your blog’s style!
+#### Step 4: Unloading the Texture
 
+When you're done, remember to unload the texture from memory with UnloadTexture() to prevent memory leaks.
+
+### Conclusion
+
+In this tutorial, you learned how to load and display a texture in Raylib using DrawTexture(). We also briefly mentioned more advanced functions like DrawTextureEx(), DrawTexturePro(), and others, which you'll find useful as you get deeper into graphics programming.
+
+In the next tutorial, we’ll cover animations and sprite sheets in more detail!

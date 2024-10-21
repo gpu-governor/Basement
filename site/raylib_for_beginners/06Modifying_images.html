@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Governor's Basement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
+    <link rel="stylesheet" href="syntax_highlight/xt256.css"> <!-- Highlight.js theme -->
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Governor's Basement</a>
+        <nav class="navbar">
+        <p>Support us via</p>
+            <a href="#Contacts"><button>Donations</button></a>
+        </nav>
+    </header>
+    
+    <div class="panel">
+        <nav class="navbar">
+            <a href="https://gpu-governor.github.io/Basement/">Home</a>
+            <a href="https://www.youtube.com/@GPU_Governor">Youtube</a>
+            <a>Udemy</a>
+            <a href="https://discord.gg/QM97pDZHtY">Discord</a>
+            
+        </nav>
+    </div>
+
+    <main class="home">
+        <div class="home-content">
+          <h5><i>Last updated: 12/5/24</i></h5>
+          <hr>
+          <h3>Modifying Images in Raylib: Cropping, Resizing, ...</h3>
+
+<p>In this tutorial, we’ll explore how to modify images in Raylib by focusing on three primary operations: cropping, resizing, and scaling.
+<br>
+ You’ll need an image to work with, so let's assume you have an image.png in your project folder and you have a main.c file that looks like this :</p>
+
+<pre>
+<code class="language-c">
+#include "raylib.h"
+
+int main() {
+    // Initialize window and basic settings
+    InitWindow(800, 600, "Image Modification in Raylib");
+    SetTargetFPS(60);
+
+    // Load image from file
+    Image image = LoadImage("image.png");
+
+    // Convert image to texture
+    Texture2D texture = LoadTextureFromImage(image);
+
+    // Main game loop
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the modified image
+        DrawTexture(texture, 200, 150, WHITE);
+
+        EndDrawing();
+    }
+
+    // Unload the image and texture
+    UnloadTexture(texture);
+    UnloadImage(image);
+
+    CloseWindow();
+    return 0;
+}
+</code>
+</pre>
+
+<p>Now that we have an image loaded and displayed, let's move on to modifying it.</p>
+
+<h4 style="color: #00abf0;">Cropping an Image</h4>
+
+<p>Cropping is useful when you only want a specific part of an image. Raylib offers the ImageCrop() function, which takes an Image and a Rectangle that defines the area to crop.</p>
+
+<pre>
+<code class="language-c">
+// Define the rectangle to crop (x, y, width, height)
+Rectangle cropRect = { 50, 50, 200, 150 };
+
+// Crop the image
+ImageCrop(&image, cropRect);
+
+// Reload texture to apply the changes
+texture = LoadTextureFromImage(image);
+</code>
+</pre>
+
+<p>In this example, the image will be cropped to a region starting from (50, 50) and extending 200 pixels wide and 150 pixels tall. The original image data is modified, so the texture must be reloaded to reflect the changes on-screen.</p>
+
+<h4 style="color: #00abf0;">Resizing an Image</h4>
+
+<p>Resizing is common when you need to adjust the resolution of images for different screen sizes or UI elements. Raylib provides the ImageResize() function to scale an image to a new width and height.</p>
+
+<pre>
+<code class="language-c">
+// Resize the image to 400x300 pixels
+ImageResize(&image, 400, 300);
+
+// Reload the texture to apply the resized image
+texture = LoadTextureFromImage(image);
+</code>
+</pre>
+
+<p>In this case, the image is resized to 400 by 300 pixels. Again, the image must be reloaded as a texture after modification.</p>
+
+<h4 style="color: #00abf0;">Scaling an Image</h4>
+
+<p>Scaling is similar to resizing but allows for non-uniform scaling (stretching or shrinking along different axes). For this, you can use the ImageResizeNN() function, which resizes the image using nearest-neighbor scaling.</p>
+
+<pre>
+<code class="language-c">
+// Scale the image to 2x its original size
+ImageResizeNN(&image, image.width * 2, image.height * 2);
+
+// Reload the texture
+texture = LoadTextureFromImage(image);
+</code>
+</pre>
+
+<p>This method is particularly useful for pixel art or images where you want to preserve sharp edges and avoid blurring during resizing.</p>
+
+<h4 style="color: #00abf0;">Rotating and Flipping Images</h4>
+
+<p>In addition to cropping and resizing, Raylib allows you to rotate or flip images. Here are a couple of examples:</p>
+
+<ol>
+<li>Rotate Image: Rotate an image by 90, 180, or 270 degrees with ImageRotateCW() and ImageRotateCCW():</li>
+</ol>
+
+<pre>
+<code class="language-c">
+// Rotate image clockwise
+ImageRotateCW(&image);
+
+// Reload texture
+texture = LoadTextureFromImage(image);
+</code>
+</pre>
+
+<ol start="2">
+<li>Flip Image: Flip an image horizontally or vertically with ImageFlipHorizontal() and ImageFlipVertical():</li>
+</ol>
+
+<pre>
+<code class="language-c">
+// Flip image horizontally
+ImageFlipHorizontal(&image);
+
+// Reload texture
+texture = LoadTextureFromImage(image);
+</code>
+</pre>
+
+<h3>Conclusion</h3>
+
+<p>Raylib’s image manipulation functions make it easy to crop, resize, scale, and rotate images with minimal code. These features are invaluable when you're developing games or graphical applications where images need to be adjusted dynamically.</p>
+
+<p>I hope this guide helps you get started with modifying images in Raylib! If you're interested in more advanced techniques like pixel manipulation, stay tuned for future tutorials.</p>
+
+        </div>
+    </main>
+    
+        <footer class="footer">
+                <!--empty-->
+            </span>
+    </footer>
+    <div>
+      <div style="text-align: center; margin-top: 50px;">
+    <h3>Stay Connected</h3>
+    <p>Join our community, follow us, and stay updated:</p>
+    
+        <p>
+        <a href="https://discord.gg/QM97pDZHtY" target="_blank">Discord</a> |
+        <a href="https://x.com/gpu_governor" target="_blank">X</a> |
+        <a href="https://github.com/gpu-governor" target="_blank">GitHub</a> |
+        <a href="https://www.youtube.com/@GPU_Governor" target="_blank">YouTube</a> | <a>Donations</a>
+    </p>
+</div>
+      <hr>
+    <p>GPU Governor, Public Domain &copy;, 2024 - present</p>
+    <a>gpu.governor@gmail.com</a>
+    </div>
+        <script src="syntax_highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
